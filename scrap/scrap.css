@@ -1,0 +1,15 @@
+h1 {
+    font-size: 50px;
+}
+
+input {
+    font: Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 20px;
+    width: 300px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
