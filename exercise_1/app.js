@@ -13,7 +13,12 @@ function tableData (data) {
     
     for (i=0; i < objectKeys.length; i++) {
         let headerCell = document.createElement('th');
-        headerCell.append(document.createTextNode(objectKeys[i]));
+        if (objectKeys[i].startsWith("first")) {
+            headerCell.append(document.createTextNode("Not First Name"));
+        } else {
+            headerCell.append(document.createTextNode(objectKeys[i]));
+        }
+        
         headerRow.append(headerCell);
     };
     
@@ -21,46 +26,56 @@ function tableData (data) {
     
 };
 
-tableData(data);
 */
 
 
+//Get JSON, run function
 
-
-
-
-//Working Method
-
-
-   fetch("./data/contacts.json") //is this the best way?
+fetch("./data/contacts.json")
         .then(function (response) {
         return response.json();
     }).then(function (json) {
-       
-       function tableData (data) {
-           let objectKeys = Object.keys(data[0]);
-           let table = document.querySelector('table');
-           let headerRow = document.createElement ('tr');
-           
-           for (let keyName of objectKeys) {
+       tableData(json);
+});
+
+// Function
+
+    function tableData (data) {
+        
+        // Create Headings
+        
+        let objectKeys = Object.keys(data[0]);
+        let table = document.querySelector('table');
+        let headerRow = document.createElement ('tr');
+        
+        for (let keyName of objectKeys) {
                let headerCell = document.createElement('th');
                headerCell.append(document.createTextNode(keyName));
                headerRow.append(headerCell);
            };
-    
-    table.append(headerRow);
-           
-           for (let i = 0; i < data.length; i++) {
+        
+        table.append(headerRow);
+        
+        // Table Data
+        
+        for (let i = 0; i < data.length; i++) {
                let dataRow = document.createElement('tr');
                
                for (let keyName of objectKeys) {
                    let dataCell = document.createElement('td');
-                   dataCell.append(document.createTextNode(data[i][keyName]));
+                   if (data[i][keyName] === null) {
+                       dataCell.append(document.createTextNode("Not Known"));
+                   } else if (data[i][keyName].startsWith("data:image")) {
+                       let img = document.createElement('img');
+                       img.src = data[i][keyName];
+                       dataCell.append(img);
+                   } else {
+                       dataCell.append(document.createTextNode(data[i][keyName]));
+                   };
+                   
                    dataRow.append(dataCell);
-               }
+               };
+               
                table.append(dataRow);
            }
        };
-       
-       tableData(json);
-   });
