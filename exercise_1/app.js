@@ -51,10 +51,10 @@ tableData(data);
     table.append(headerRow);
            
            for (let i = 0; i < data.length; i++) {
-               const dataRow = document.createElement('tr');
+               let dataRow = document.createElement('tr');
                
-               for (const keyName of objectKeys) {
-                   const dataCell = document.createElement('td');
+               for (let keyName of objectKeys) {
+                   let dataCell = document.createElement('td');
                    dataCell.append(document.createTextNode(data[i][keyName]));
                    dataRow.append(dataCell);
                }
